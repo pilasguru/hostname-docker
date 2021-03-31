@@ -16,7 +16,7 @@ var (
 
 func httpHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("%s - [%s] %s %s %s\n", hostname, time.Now().Format(time.RFC1123), r.RemoteAddr, r.Method, r.URL)
-	fmt.Fprintf(w, "Hostname: %s", hostname)
+	fmt.Fprintf(w, "Your are see the hostname: %s", hostname)
 }
 
 func main() {

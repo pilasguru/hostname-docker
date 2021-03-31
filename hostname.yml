@@ -1,0 +1,34 @@
+version: '3'
+
+networks:
+  hostname:
+    driver: overlay
+  traefik-public:
+    external: true
+
+services:
+  hostname:
+    image: pg/hostname-docker
+    networks:
+      - hostname
+      - traefik-public
+    deploy:
+      mode: replicated
+      replicas: 5
+      resources:
+        limits:
+          memory: 32M
+        reservations:
+          memory: 16M
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.constraint-label=traefik-public
+        - traefik.http.routers.hostname-http.rule=Host(`hostname.cloud.w.uy`)
+        - traefik.http.routers.hostname-http.entrypoints=http
+        - traefik.http.routers.hostname-http.middlewares=https-redirect
+        - traefik.http.routers.hostname-https.rule=Host(`hostname.cloud.w.uy`)
+        - traefik.http.routers.hostname-https.entrypoints=https
+        - traefik.http.routers.hostname-https.tls=true
+        - traefik.http.routers.hostname-https.tls.certresolver=le
+        - traefik.http.services.hostname.loadbalancer.server.port=3000

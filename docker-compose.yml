@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+
+    traefik:
+        image: traefik:v2.0
+        command:
+            - "--api.insecure=true"
+            - "--providers.docker=true"
+            - "--entryPoints.web.address=:9999"
+        ports:
+            - 8888:8080
+            - 9999:9999
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+
+# docker run --rm -it -p 9999:3000 pg/hostname-docker
+    hostname:
+        image: pg/hostname-docker
+        labels:
+          - "traefik.enable=true"
+          - traefik.http.routers.hostname.rule=Host(`localhost`)
+          - traefik.http.middlewares.hostname.compress=true
+          - traefik.http.routers.hostname.middlewares=hostname@docker
+          - traefik.port=3000
+
+
+
+
+# docker-compose up -d --no-deps --scale hostname=5

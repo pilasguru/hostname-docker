@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hostname-svc
+  namespace: rodolfo
+  labels:
+    name: hostname
+spec:
+  type: ClusterIP
+  selector:
+    name: hostname
+  ports:
+  - port: 8383
+    protocol: TCP
+    targetPort: 8000
