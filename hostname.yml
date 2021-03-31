@@ -8,7 +8,7 @@ networks:
 
 services:
   hostname:
-    image: pg/hostname-docker
+    image: adongy/hostname-docker
     networks:
       - hostname
       - traefik-public
