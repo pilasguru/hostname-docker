@@ -19,4 +19,4 @@ jobs:
         account_id: ${{ secrets.AWS_ACCOUNT_ID }}
         repo: hostname-docker
         region: us-east-1
-        tags: latest,%echo $GITHUB_SHA
+        tags: latest,${{ github.sha }}
