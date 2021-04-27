@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: hostname-pod-example
-  namespace: rodolfo
-spec:
-  containers:
-    - name: hostname
-      image: adongy/hostname-docker
