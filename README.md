@@ -1,6 +1,6 @@
 # Docker Hostname
 
-From: https://github.com/adongy/hostname-docker.git
+From: https://github.com/robertstarmer/hostname
 
 ## Configuration
 
