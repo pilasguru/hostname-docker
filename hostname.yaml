@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 networks:
   hostname:
@@ -8,7 +8,7 @@ networks:
 
 services:
   hostname:
-    image: adongy/hostname-docker
+    image: 678361682758.dkr.ecr.us-east-1.amazonaws.com/hostname-docker:latest
     networks:
       - hostname
       - traefik-public
@@ -31,4 +31,4 @@ services:
         - traefik.http.routers.hostname-https.entrypoints=https
         - traefik.http.routers.hostname-https.tls=true
         - traefik.http.routers.hostname-https.tls.certresolver=le
-        - traefik.http.services.hostname.loadbalancer.server.port=3000
+        - traefik.http.services.hostname.loadbalancer.server.port=80
