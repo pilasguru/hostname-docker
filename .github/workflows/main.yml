@@ -2,21 +2,38 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
   workflow_dispatch:
-  
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: theikkila/aws-ecr-action@v1
-      with:
-        access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        account_id: ${{ secrets.AWS_ACCOUNT_ID }}
-        repo: hostname-docker
-        region: us-east-1
-        tags: latest,${{ github.sha }}
+      - uses: actions/checkout@v2
+      - uses: theikkila/aws-ecr-action@v1
+        with:
+          access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+          repo: hostname-docker
+          region: us-east-1
+          tags: latest,${{ github.sha }}
+      - name: pull worker
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            docker image pull 678361682758.dkr.ecr.us-east-1.amazonaws.com/hostname-docker:latest
+          host: ${{ secrets.WORKER }}
+          user: mooveit
+          key: ${{ secrets.PRIVATE_KEY}}
+      - name: pull manager & update
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            docker image pull 678361682758.dkr.ecr.us-east-1.amazonaws.com/hostname-docker:latest
+            docker service update --update-order "start-first" --force hostname_hostname
+          host: ${{ secrets.MANAGER }}
+          user: mooveit
+          key: ${{ secrets.PRIVATE_KEY}}

@@ -37,3 +37,13 @@ docker stack ps hostname
 ```
 docker stack rm hostname
 ```
+
+## Update
+
+```
+docker image pull at each node
+
+docker service update \
+ --update-order "start-first" \
+ --force hostname_hostname
+```
