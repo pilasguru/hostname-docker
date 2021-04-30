@@ -41,7 +41,7 @@ jobs:
         with:
           command: |
             docker image pull 678361682758.dkr.ecr.us-east-1.amazonaws.com/hostname-docker:latest
-            docker service update --update-order "start-first" --force hostname_hostname
+            docker service update --update-order "start-first" --force test_hostname
           host: ${{ secrets.MANAGER }}
           user: mooveit
           key: ${{ secrets.PRIVATE_KEY}}
