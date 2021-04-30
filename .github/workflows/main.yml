@@ -25,7 +25,15 @@ jobs:
         with:
           command: |
             docker image pull 678361682758.dkr.ecr.us-east-1.amazonaws.com/hostname-docker:latest
-          host: ${{ secrets.WORKER }}
+          host: ${{ secrets.WORKER_2 }}
+          user: mooveit
+          key: ${{ secrets.PRIVATE_KEY}}
+      - name: pull worker
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            docker image pull 678361682758.dkr.ecr.us-east-1.amazonaws.com/hostname-docker:latest
+          host: ${{ secrets.WORKER_3 }}
           user: mooveit
           key: ${{ secrets.PRIVATE_KEY}}
       - name: pull manager & update
