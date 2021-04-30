@@ -3,7 +3,7 @@
 # Change the file to create a new container
 
 HOSTNAME=`hostname`
-VERSION=${VERSION:-v6}
+VERSION=${VERSION:-v7}
 cat > /usr/share/nginx/html/index.html <<EOF
 <HTML>
 <HEAD>
